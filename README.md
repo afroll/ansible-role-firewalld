@@ -50,4 +50,4 @@ MIT
 
 ## Author Information
 
-Apostolos Tovletoglou [ansible-role-firewalld](https://github.com/tovletoglou/ansible-google-firewalld)
+Apostolos Tovletoglou [ansible-role-firewalld](https://github.com/tovletoglou/ansible-role-firewalld)
