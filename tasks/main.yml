@@ -1,15 +1,20 @@
+---
+
 - name: Install firewalld
-  yum:
+  become: yes
+  package:
     name: firewalld
-    state: present
+    state: "{{ firewalld_state }}"
 
 - name: Start and set up firewalld
+  become: yes
   service:
     name: firewalld
     enabled: yes
     state: started
 
 - name: Update firewall rules
+  become: yes
   firewalld:
     port: "{{ item.value.port }}/{{ item.value.protocol }}"
     permanent: "{{ item.value.permanent }}"
@@ -20,9 +25,9 @@
 
 - name: Check firewall configuration
   command: firewall-cmd --list-all
-  when: firewall_debug
+  when: firewalld_debug
   register: check_firewalld
 
 - name: Print firewall configuration
   debug: msg="{{ check_firewalld.stdout_lines }}"
-  when: firewall_debug
+  when: firewalld_debug

@@ -6,11 +6,55 @@ Install and configures firewalld on RedHat/Centos 7
 
 Tested on RedHat 7 & CentOS 7
 
+## Example playbook
+
+Basic playbook using the default variables. In will install and enabled firewalld and open SSH port.
+
+```yml
+- hosts: all
+  roles:
+    - ansible-role-firewalld
+```
+
+Playbook with custom variables.
+
+```yml
+- hosts: all
+  roles:
+    - ansible-role-firewalld
+  vars:
+    firewalld_state: latest
+    firewall_debug: true
+    firewalld_rules:
+      ssh:
+        port: 22
+        protocol: tcp
+        state: enabled
+        zone: public
+        permanent: true
+      http:
+        port: 80
+        protocol: tcp
+        state: enabled
+        zone: public
+        permanent: true
+      https:
+        port: 443
+        protocol: tcp
+        state: enabled
+        zone: public
+        permanent: true
+```
+
 ## Role Variables
 
-Available variables are listed below, along with default values `defaults/main.yml`
+firewalld state( `present | latest | absent` )
 
-Print firewall rules (`true | false`)
+```yml
+firewalld_state: latest
+````
+
+Print firewall rules ( `true | false` )
 
 ```yml
 firewall_debug: false
@@ -22,18 +66,6 @@ Add or remove firewall rules
 firewalld_rules:
   ssh:
     port: 22
-    protocol: tcp
-    state: enabled
-    zone: public
-    permanent: true
-  http:
-    port: 80
-    protocol: tcp
-    state: enabled
-    zone: public
-    permanent: true
-  https:
-    port: 443
     protocol: tcp
     state: enabled
     zone: public
